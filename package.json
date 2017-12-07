@@ -1,0 +1,43 @@
+{
+  "name": "whale",
+  "productName": "Whale",
+  "version": "0.12.0",
+  "description": "Whale app",
+  "private": true,
+  "license": "MIT",
+  "repository": "1000ch/whale",
+  "author": {
+    "name": "Shogo Sensui",
+    "email": "shogo.sensui@gmail.com",
+    "url": "github.com/1000ch"
+  },
+  "scripts": {
+    "test": "xo",
+    "start": "electron .",
+    "postversion": "git push && git push --tags",
+    "build": "npm run build:macos && npm run build:linux && npm run build:windows",
+    "build:macos": "electron-packager . --no-prune --overwrite --asar --out=dist --ignore='^asset$' --platform=darwin --arch=x64 --icon=static/Icon.icns --app-bundle-id=net.1000ch.whale --osx-sign='Developer ID Application: Shogo Sensui (NZR22QGKNQ)' && cd dist/Whale-darwin-x64 && zip -ryXq9 ../Whale-macos-v${npm_package_version}.zip Whale.app",
+    "build:linux": "electron-packager . --no-prune --overwrite --out=dist --ignore='^asset$' --platform=linux --arch=x64 --app-bundle-id=net.1000ch.whale && cd dist/Whale-linux-x64/ && zip -ryq9 ../Whale-linux-v${npm_package_version}.zip *",
+    "build:windows": "electron-packager . --no-prune --overwrite --asar --out=dist --ignore='^asset$' --platform=win32 --arch=ia32 --icon=static/Icon.ico --version-string.ProductName=$npm_package_productName && cd dist/Whale-win32-ia32 && zip -ryq9 ../Whale-windows-v${npm_package_version}.zip *"
+  },
+  "dependencies": {
+    "devtron": "^1.4.0",
+    "electron-config": "^1.0.0",
+    "electron-context-menu": "^0.9.0",
+    "electron-debug": "^1.4.0",
+    "electron-dl": "^1.10.0"
+  },
+  "devDependencies": {
+    "electron": "^1.8.1",
+    "electron-packager": "^9.1.0",
+    "xo": "^0.19.0"
+  },
+  "xo": {
+    "esnext": true,
+    "space": 2,
+    "envs": [
+      "node",
+      "browser"
+    ]
+  }
+}
